@@ -4,21 +4,21 @@ import axios from "axios";
 export default {
   data() {
     return {
-      characters: [],
+      cardsArray: [],
     };
   },
 
   methods: {
-    fetchCharacters() {
+    fetchcardsArray() {
       const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0";
 
       axios.get(url).then((response) => {
-        this.characters = response.data.data;
+        this.cardsArray = response.data.data;
       });
     },
   },
   mounted() {
-    this.fetchCharacters();
+    this.fetchcardsArray();
   },
 };
 
@@ -28,11 +28,11 @@ export default {
   <h1 class="p-3 border-2 bg-danger mb-5">Yu-Gi-Oh</h1>
   <div class="container">
     <div class="row row-cols-5 g-5">
-      <div class="col box" v-for="singleCharacter in characters">
-        <img class="cards-img" :src="singleCharacter.card_images[0].image_url" alt="">
+      <div class="col box" v-for="singleCard in cardsArray">
+        <img class="cards-img" :src="singleCard.card_images[0].image_url" alt="">
         <div class="text bg-warning box-text text-center">
-          <h3>{{ singleCharacter.name }}</h3>
-          <h6>{{ singleCharacter.archetype }}</h6>
+          <h3>{{ singleCard.name }}</h3>
+          <h6>{{ singleCard.archetype }}</h6>
 
         </div>
       </div>

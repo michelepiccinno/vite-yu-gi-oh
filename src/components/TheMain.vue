@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       cardsArray: [],
+      archetype: [],
     };
   },
 
@@ -16,9 +17,19 @@ export default {
         this.cardsArray = response.data.data;
       });
     },
+
+    fetchcardsArchetype() {
+      const url = "https://db.ygoprodeck.com/api/v7/archetypes.php";
+
+      axios.get(url).then((response) => {
+        this.archetype = response.data;
+      });
+    },
+
   },
   mounted() {
     this.fetchcardsArray();
+    this.fetchcardsArchetype();
   },
 };
 
@@ -28,6 +39,11 @@ export default {
   <h1 class="p-3 border-2 bg-danger mb-5">Yu-Gi-Oh</h1>
   <div class="container">
     <div class="row row-cols-5 g-5">
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Select option</option>
+        <option v-for="(singleArchetype, i) in archetype" value="1">{{ singleArchetype.archetype[i] }}</option>
+      </select>
+
       <div class="col box" v-for="singleCard in cardsArray">
         <img class="cards-img" :src="singleCard.card_images[0].image_url" alt="">
         <div class="text bg-warning box-text text-center">
@@ -40,7 +56,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .box {
   max-height: 600px;
 

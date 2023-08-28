@@ -11,10 +11,11 @@ export default {
   },
 
   methods: {
-    fetchcardsArray() {
-     /*const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=3000&offset=0";*/
-      const url = `https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=${this.selectedArchetype}&num=20&offset=0`;
-
+    fetchcardsArray() { 
+      const url = this.selectedArchetype === null
+      ? "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=300&offset=0"
+      : `https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=${this.selectedArchetype}&num=200&offset=0`;
+    console.log('il this.selectedArchetype è' + this.selectedArchetype);
       axios.get(url).then((response) => {
         this.cardsArray = response.data.data;
       });
@@ -22,7 +23,6 @@ export default {
 
     fetchcardsArchetype() {
       const url = "https://db.ygoprodeck.com/api/v7/archetypes.php";
-
       axios.get(url).then((response) => {
         this.archetype = response.data;
         console.log(this.archetype)
@@ -53,7 +53,7 @@ export default {
   <h1 class="p-3 border-2 bg-danger mb-5">Yu-Gi-Oh</h1>
   <div class="container">
     <div class="row row-cols-5 g-5">
-      <select class="form-select" v-model="selectedArchetype" aria-label="Default select example">
+      <select class="form-select" v-model="selectedArchetype" @change="fetchcardsArray" aria-label="Default select example">
         <option value="" selected>Seleziona Archetipo</option>
         <option v-for="singleArchetype in archetype" :value="singleArchetype.archetype_name">{{singleArchetype.archetype_name}}</option>
       </select>

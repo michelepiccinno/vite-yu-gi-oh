@@ -12,7 +12,8 @@ export default {
 
   methods: {
     fetchcardsArray() {
-      const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0";
+     /*const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=3000&offset=0";*/
+      const url = `https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=${this.selectedArchetype}&num=20&offset=0`;
 
       axios.get(url).then((response) => {
         this.cardsArray = response.data.data;
